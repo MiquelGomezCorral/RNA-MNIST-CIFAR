@@ -121,7 +121,8 @@ print("Params: ", count_parameters(net))
 
 # Training hyperparameters
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(net.parameters(), lr=0.01, weight_decay=1e-6, momentum=0.9)
+# optimizer = optim.SGD(net.parameters(), lr=0.01, weight_decay=1e-6, momentum=0.9)
+optimizer = optim.AdamW(net.parameters(), lr=0.01, weight_decay=1e-6)
 epochs = 25
 
 
