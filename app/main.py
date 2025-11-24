@@ -2,16 +2,20 @@
 
 import argparse
 import dotenv
-from src.config import Configuration, args_to_config
+from maikol_utils.other_utils import args_to_dataclass
+from src.config import Configuration
 
-def cmd_read_extract(args: argparse.Namespace):
+from scripts import train_mnist
+
+def cmd_mnist(args: argparse.Namespace):
     """Call read_extract_from_config_list with the given args."""
-    CONFIG: Configuration = args_to_config(args)
-    ...
+    CONFIG: Configuration = args_to_dataclass(args, Configuration)
+    train_mnist(CONFIG)
 
-def cmd_test(args):
-    """Call test functions."""
-    ...
+def cmd_cifar(args: argparse.Namespace):
+    """Call read_extract_from_config_list with the given args."""
+    CONFIG: Configuration = args_to_dataclass(args, Configuration)
+
 
 # ======================================================================================
 #                                       ARGUMENTS
@@ -25,23 +29,19 @@ if __name__ == "__main__":
     subparsers = parser.add_subparsers(dest="function", required=True)
 
     # ======================================================================================
-    #                                       read_extract
+    #                                       mnist
     # ======================================================================================
-    p_read = subparsers.add_parser("read-extract", help="Read and extract from config list")
-    p_read.add_argument(
-        "-d", "--dataset_name", type=str, default="Nuelas", help="Name of raw data folder"
-    )
-    p_read.add_argument("-m", "--max_files", type=int, default=None, help="Max files to load")
-    p_read.add_argument(
-        "-l", "--use_llm", action="store_false", default=True, help="Disable LLM extraction"
-    )
-    p_read.set_defaults(func=cmd_read_extract)
+    p_mnist = subparsers.add_parser("mnist", help="Read and extract from config list")
+    p_mnist.set_defaults(func=cmd_mnist)
 
     # ======================================================================================
-    #                                       test
+    #                                       cifar
     # ======================================================================================
-    p_test = subparsers.add_parser("test", help="Test script with any code")
-    p_test.set_defaults(func=cmd_test)
+    p_cifar = subparsers.add_parser("cifar", help="Read and extract from config list")
+    p_cifar.add_argument(
+        "-c", "--code", type=int, default=1, help="Wich script shall be runned.", choices=[1, 2, 3]
+    )
+    p_cifar.set_defaults(func=cmd_cifar)
 
     # ======================================================================================
     #                                       CALL

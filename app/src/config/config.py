@@ -3,28 +3,28 @@
 Configuration of project variables that we want to have available
 everywhere and considered configuration.
 """
-# import os
+import os
 import dataclasses
 from dataclasses import dataclass
 from argparse import Namespace
+import multiprocessing
 
 @dataclass 
 class Configuration:
     """Configuration class for the project."""
+    DATA_FOLDER: str = "../data/"
+    MODEL_FOLDER: str = "../models/"
+    best_model_path: str = os.path.join(MODEL_FOLDER, "best_model.pth")
 
-    exp_name: str = "base_name"
-    seed:     int = 42
+    seed: int = 42
+    batch_size: int = 1024
+    num_workers: int = multiprocessing.cpu_count()-4
+    num_classes: int = 10
+    epochs: int = 125
+    device: str = "cuda"  # "cpu" or "cuda"
 
-    gym_id:          str = None
-    learning_rate: float = 2.5e-4
-    total_timesteps: int = 25_000
 
-    torch_deterministic: bool = True
-    cuda:                bool = True
 
-    track_run:         bool = False
-    wandb_project_name: str = "RL"
-    wandb_entity:       str = None
 
     def __post_init__(self):
         ...
