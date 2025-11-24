@@ -15,6 +15,7 @@ class Configuration:
     LOGS_FOLDER: str = "../logs/"
     best_model_path: str = os.path.join(MODEL_FOLDER, "best_model.pth")
 
+    description: str = "MNIST classification with MLP using Pytorch"
     seed: int = 42
     device: str = "cuda"  # "cpu" or "cuda"
     num_workers: int = multiprocessing.cpu_count()-4

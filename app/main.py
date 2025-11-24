@@ -44,6 +44,9 @@ if __name__ == "__main__":
     p_mnist.add_argument(
         "-e", "--epochs", type=int, default=125, help="Number of epochs (default: 125)",
     )
+    p_mnist.add_argument(
+        "-des", "--description", type=str, default="MNIST classification with MLP using Pytorch", help="Description of the experiment"
+    )
     p_mnist.set_defaults(func=cmd_mnist)
 
     # ======================================================================================
