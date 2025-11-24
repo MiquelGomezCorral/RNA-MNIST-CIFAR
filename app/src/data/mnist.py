@@ -31,6 +31,9 @@ class MNIST_dataset(Dataset):
         # provide 1x28x28 (channels, height, width) -> 784
         image_tensor = image_tensor.view(-1)
 
+        # data augmentation
+        
+
         # Label
         label = torch.tensor(self.data[idx][1])
         label = F.one_hot(label, num_classes=10).float()

@@ -18,7 +18,7 @@ def count_parameters(model):
 def save_config_score(CONFIG: Configuration, score: float, model: MnistNet) -> None:
     filepath = os.path.join(CONFIG.LOGS_FOLDER, f"config_score_{score:.4f}.txt")
     with open(filepath, "w") as f:
-        print(CONFIG.description, file=f)
+        print(f"Description: {CONFIG.description}", file=f)
         for field in dataclasses.fields(CONFIG):
             value = getattr(CONFIG, field.name)
             f.write(f"{field.name}: {value}\n")
