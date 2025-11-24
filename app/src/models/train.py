@@ -15,7 +15,8 @@ def train_model(
     train_dataloader: DataLoader, 
     test_dataloader: DataLoader,
     criterion: nn.Module,
-    optimizer: optim.Optimizer
+    optimizer: optim.Optimizer,
+    scheduler: torch.optim.lr_scheduler._LRScheduler,
 ):
     """Train a model with given data.
 
@@ -26,6 +27,7 @@ def train_model(
         test_dataloader (DataLoader): testing data loader.
         criterion (nn.Module): loss function.
         optimizer (optim.Optimizer): optimization algorithm.
+        scheduler (torch.optim.lr_scheduler._LRScheduler): learning rate scheduler.
 
     Returns:
         models: MnistNet
@@ -66,6 +68,8 @@ def train_model(
                 # print statistics
                 train_loss += loss.item()
 
+            scheduler.step()
+        # End for batch
         train_loss /= len(train_dataloader.dataset)
 
         # =============== TEST NETWORK ===============
@@ -85,6 +89,9 @@ def train_model(
                     pred = torch.argmax(outputs, dim=1)
 
                     test_correct += pred.eq(labels).sum().item()
+                # End for batch
+            # End with tqdm
+        # End with torch.no_grad()
 
         test_loss /= len(test_dataloader.dataset)
         test_accuracy = 100. * test_correct / len(test_dataloader.dataset)

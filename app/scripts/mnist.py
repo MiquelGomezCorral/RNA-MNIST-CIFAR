@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import torch.optim as optim
 
@@ -19,6 +20,7 @@ def train_mnist(CONFIG: Configuration):
     criterion = nn.CrossEntropyLoss()
     # optimizer = optim.SGD(net.parameters(), lr=0.01, weight_decay=1e-6, momentum=0.9)
     optimizer = optim.AdamW(model.parameters(), lr=CONFIG.lr, weight_decay=CONFIG.weight_decay)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=CONFIG.epochs)
 
 
     # ==================== TRAINING ====================
@@ -28,7 +30,8 @@ def train_mnist(CONFIG: Configuration):
         train_dataloader=train_loader, 
         test_dataloader=test_loader, 
         criterion=criterion, 
-        optimizer=optimizer
+        optimizer=optimizer,
+        scheduler=scheduler,
     )
 
   
