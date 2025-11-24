@@ -140,7 +140,7 @@ def train_model(
 
     save_config_score(
         CONFIG=CONFIG,
-        score=test_accuracy,
+        score=best_accuracy,
         model=model,
     )
     

@@ -24,6 +24,7 @@ class Configuration:
     epochs: int = 125
     lr: float = 0.001
     weight_decay: float = 1e-6
+    momentum: float = 0.9
 
     def __post_init__(self):
         ...

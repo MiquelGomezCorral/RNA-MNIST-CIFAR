@@ -11,7 +11,7 @@ def get_device():
 
 def count_parameters(model):
     total = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    print(f"Total trainable parameters: {total}")
+    print(f"Total trainable parameters: {total:_}")
     return total
 
 

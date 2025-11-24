@@ -4,18 +4,18 @@ class MnistNet(nn.Module):
     def __init__(self, num_classes):
         super(MnistNet, self).__init__()
         self.sizes=[
-            [784, 1024],
-            [1024, 1024],
-            [1024, 512],
-            [512, 256],
-            [256, num_classes]
+            [784, 1536],
+            [1536, 1536],
+            [1536, 1536],
+            [1536, 512],
+            [512, num_classes]
         ]
         self.layers = nn.ModuleList()
         self.skip_size = self.sizes[0][0]  # Tamaño de la entrada inicial 
 
         for i in range(len(self.sizes)-1):
             dims = self.sizes[i]
-            if i % 3 == 2: # Cada dos capas
+            if i % 3 == 2: # Cada 3 capas
                 self.layers.append(
                     SkipConnection(dims[0], self.skip_size, dims[1])
                 )
@@ -40,10 +40,10 @@ class CustomLayer(nn.Module):
         super(CustomLayer, self).__init__()
         self.layers = nn.ModuleList()
         
+        self.layers.append(nn.BatchNorm1d(input))
         self.layers.append(nn.Linear(input, output))
-        self.layers.append(nn.BatchNorm1d(output))
         self.layers.append(nn.ReLU())
-        self.layers.append(nn.Dropout(0.25))
+        self.layers.append(nn.Dropout(0.4))
 
     def forward(self, x, skip=None):
         for layer in self.layers:
@@ -54,22 +54,22 @@ class CustomLayer(nn.Module):
 class SkipConnection(nn.Module):
     def __init__(self, input, skip_input, output):
         super(SkipConnection, self).__init__()
+        self.batchnorm = nn.BatchNorm1d(input)
         self.linear = nn.Linear(input, output)
-        self.batchnorm = nn.BatchNorm1d(output)
         self.relu = nn.ReLU()
-        self.dropout = nn.Dropout(0.25)
+        self.dropout = nn.Dropout(0.4)
 
+        self.batchnorm_skip = nn.BatchNorm1d(skip_input)
         self.linear_skip = nn.Linear(skip_input, output)
-        self.batchnorm_skip = nn.BatchNorm1d(output)
 
     def forward(self, x, skip):
-        x = self.linear(x)
         x = self.batchnorm(x)
+        x = self.linear(x)
         x = self.relu(x)
         x = self.dropout(x)
 
-        skip = self.linear_skip(skip)
         skip = self.batchnorm_skip(skip)
+        skip = self.linear_skip(skip)
         x += skip
         x = self.relu(x)
 
