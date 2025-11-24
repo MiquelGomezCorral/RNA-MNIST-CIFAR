@@ -1,0 +1,15 @@
+# Deep Learning Lab Requirements
+# PyTorch and related packages
+
+# Data manipulation and analysis
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Progress bars and utilities
+tqdm>=4.65.0
+
+# Optional: For CUDA support
+# Install PyTorch with CUDA from: https://pytorch.org/get-started/locally/
+# Example for CUDA 11.8:
+# torch>=2.0.0+cu118
+# torchvision>=0.15.0+cu118
