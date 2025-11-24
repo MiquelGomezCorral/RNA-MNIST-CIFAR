@@ -1,14 +1,10 @@
 import torch
-import torchvision
-import pandas as pd
 import torch.nn as nn
 from tqdm import tqdm
-import multiprocessing
 import torch.optim as optim
-import torch.nn.functional as  F
-from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 from maikol_utils.print_utils import print_separator
+from src.utils import save_config_score
 
 from src.config import Configuration
 from src.models import MnistNet
@@ -135,4 +131,10 @@ def train_model(
         test_accuracy = 100. * test_correct / len(test_dataloader.dataset)
     print("Final best acc: ", test_accuracy)
 
+    save_config_score(
+        CONFIG=CONFIG,
+        score=test_accuracy,
+        model=model,
+    )
+    
     return model

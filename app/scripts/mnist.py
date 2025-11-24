@@ -18,11 +18,11 @@ def train_mnist(CONFIG: Configuration):
     CONFIG.device = get_device()
     criterion = nn.CrossEntropyLoss()
     # optimizer = optim.SGD(net.parameters(), lr=0.01, weight_decay=1e-6, momentum=0.9)
-    optimizer = optim.AdamW(model.parameters(), lr=0.01, weight_decay=1e-6)
+    optimizer = optim.AdamW(model.parameters(), lr=CONFIG.lr, weight_decay=CONFIG.weight_decay)
 
 
     # ==================== TRAINING ====================
-    train_model(
+    trained_model = train_model(
         CONFIG=CONFIG, 
         model=model, 
         train_dataloader=train_loader, 
@@ -30,3 +30,5 @@ def train_mnist(CONFIG: Configuration):
         criterion=criterion, 
         optimizer=optimizer
     )
+
+  

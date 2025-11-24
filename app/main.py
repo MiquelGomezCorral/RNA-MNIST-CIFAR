@@ -32,6 +32,18 @@ if __name__ == "__main__":
     #                                       mnist
     # ======================================================================================
     p_mnist = subparsers.add_parser("mnist", help="Read and extract from config list")
+    p_mnist.add_argument(
+        "-b", "--batch_size", type=int, default=1024, help="Batch size (default: 1024)", 
+    ) 
+    p_mnist.add_argument(
+        "-lr", "--lr", type=float, default=0.001, help="Learning rate (default: 0.001)",
+    )
+    p_mnist.add_argument(
+        "-wd", "--weight_decay", type=float, default=1e-6, help="Weight decay (default: 1e-6)",
+    )
+    p_mnist.add_argument(
+        "-e", "--epochs", type=int, default=125, help="Number of epochs (default: 125)",
+    )
     p_mnist.set_defaults(func=cmd_mnist)
 
     # ======================================================================================
