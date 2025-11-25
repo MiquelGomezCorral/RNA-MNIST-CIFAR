@@ -13,6 +13,8 @@ class Configuration:
     DATA_FOLDER: str = "../data/"
     MODEL_FOLDER: str = "../models/"
     LOGS_FOLDER: str = "../logs/"
+    PID = None
+
     best_model_path: str = os.path.join(MODEL_FOLDER, "best_model.pth")
 
     description: str = "MNIST classification with MLP using Pytorch"
@@ -21,10 +23,11 @@ class Configuration:
     num_workers: int = multiprocessing.cpu_count()-4
     num_classes: int = 10
     batch_size: int = 1024
-    epochs: int = 125
-    lr: float = 0.001
+    epochs: int = 200
+    lr: float = 0.002
     weight_decay: float = 1e-6
     momentum: float = 0.9
 
     def __post_init__(self):
-        ...
+        self.PID = os.getpid()
+        self.best_model_path = os.path.join(self.MODEL_FOLDER, f"best_model-{self.PID}.pth")

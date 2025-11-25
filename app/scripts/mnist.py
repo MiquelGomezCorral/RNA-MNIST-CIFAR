@@ -17,12 +17,17 @@ def train_mnist(CONFIG: Configuration):
     count_parameters(model)
 
     CONFIG.device = get_device()
-    criterion = nn.CrossEntropyLoss()
+    criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
     # optimizer = optim.SGD(net.parameters(), lr=0.01, weight_decay=1e-6, momentum=0.9)
     optimizer = optim.AdamW(model.parameters(), lr=CONFIG.lr, weight_decay=CONFIG.weight_decay)
     # optimizer = optim.SGD(model.parameters(), lr=CONFIG.lr, weight_decay=CONFIG.weight_decay, momentum=CONFIG.momentum)
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=CONFIG.epochs)
-
+    # scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=CONFIG.epochs)
+    scheduler = torch.optim.lr_scheduler.OneCycleLR(
+        optimizer, 
+        max_lr=0.01,
+        epochs=CONFIG.epochs,
+        steps_per_epoch=len(train_loader)
+    )
 
     # ==================== TRAINING ====================
     trained_model = train_model(

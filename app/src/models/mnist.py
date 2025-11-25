@@ -8,14 +8,15 @@ class MnistNet(nn.Module):
             [1536, 1536],
             [1536, 1536],
             [1536, 512],
-            [512, num_classes]
+            [512, 256],
+            [256, num_classes]
         ]
         self.layers = nn.ModuleList()
         self.skip_size = self.sizes[0][0]  # Tamaño de la entrada inicial 
 
         for i in range(len(self.sizes)-1):
             dims = self.sizes[i]
-            if i % 3 == 2: # Cada 3 capas
+            if i % 3 == 1: # Cada 2 capas
                 self.layers.append(
                     SkipConnection(dims[0], self.skip_size, dims[1])
                 )
@@ -43,7 +44,7 @@ class CustomLayer(nn.Module):
         self.layers.append(nn.BatchNorm1d(input))
         self.layers.append(nn.Linear(input, output))
         self.layers.append(nn.ReLU())
-        self.layers.append(nn.Dropout(0.4))
+        self.layers.append(nn.Dropout(0.45))
 
     def forward(self, x, skip=None):
         for layer in self.layers:
@@ -57,7 +58,7 @@ class SkipConnection(nn.Module):
         self.batchnorm = nn.BatchNorm1d(input)
         self.linear = nn.Linear(input, output)
         self.relu = nn.ReLU()
-        self.dropout = nn.Dropout(0.4)
+        self.dropout = nn.Dropout(0.45)
 
         self.batchnorm_skip = nn.BatchNorm1d(skip_input)
         self.linear_skip = nn.Linear(skip_input, output)

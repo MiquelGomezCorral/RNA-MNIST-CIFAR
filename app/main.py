@@ -36,13 +36,13 @@ if __name__ == "__main__":
         "-b", "--batch_size", type=int, default=1024, help="Batch size (default: 1024)", 
     ) 
     p_mnist.add_argument(
-        "-lr", "--lr", type=float, default=0.001, help="Learning rate (default: 0.001)",
+        "-lr", "--lr", type=float, default=0.002, help="Learning rate (default: 0.002)",
     )
     p_mnist.add_argument(
         "-wd", "--weight_decay", type=float, default=1e-6, help="Weight decay (default: 1e-6)",
     )
     p_mnist.add_argument(
-        "-e", "--epochs", type=int, default=125, help="Number of epochs (default: 125)",
+        "-e", "--epochs", type=int, default=200, help="Number of epochs (default: 200)",
     )
     p_mnist.add_argument(
         "-des", "--description", type=str, default="MNIST classification with MLP using Pytorch", help="Description of the experiment"
