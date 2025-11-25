@@ -11,10 +11,11 @@ from src.config import Configuration
 
 
 class MNIST_dataset(Dataset):
-    def __init__(self, data, partition = "train"):
+    def __init__(self, data, partition = "train", CONFIG: Configuration = None):
         print("\nLoading MNIST ", partition, " Dataset...")
         self.data = data
         self.partition = partition
+        self.CONFIG = CONFIG
         print("\tTotal Len.: ", len(self.data), "\n", 50*"-")
 
     def __len__(self):
@@ -28,7 +29,7 @@ class MNIST_dataset(Dataset):
         image_tensor = self.from_pil_to_tensor(image)
 
         # data augmentation
-        image_tensor = data_augmentation(image_tensor, self.partition)
+        image_tensor = data_augmentation(image_tensor, self.partition, self.CONFIG)
 
         # NOTE: net expect a 784 size vector and our dataset 
         # provide 1x28x28 (channels, height, width) -> 784
@@ -49,8 +50,8 @@ def load_mnist(CONFIG: Configuration):
     test_set = torchvision.datasets.MNIST(CONFIG.DATA_FOLDER, train=False, download=True)
 
     # Load dataset MNIST_dataset class
-    train_dataset = MNIST_dataset(train_set, partition="train")
-    test_dataset = MNIST_dataset(test_set, partition="test")
+    train_dataset = MNIST_dataset(train_set, partition="train", CONFIG=CONFIG)
+    test_dataset = MNIST_dataset(test_set, partition="test", CONFIG=CONFIG)
 
     # DataLoader Class
     train_dataloader = DataLoader(train_dataset, CONFIG.batch_size, shuffle=True, num_workers=CONFIG.num_workers)
@@ -97,27 +98,23 @@ def load_mnist(CONFIG: Configuration):
 #     return image_tensor
 
 
-def data_augmentation(image_tensor, partition):
+def data_augmentation(image_tensor, partition, CONFIG: Configuration):
     """
     Apply data augmentation to MNIST images.
     Equivalent to transforms.RandomAffine + Normalize
     """
     # MNIST normalization constants
-    MNIST_MEAN = 0.1307
-    MNIST_STD = 0.3081
+    
     
     if partition == "train":
         # Apply augmentation with 50% probability
-        if torch.rand(1).item() > 0.5:
-            # Random Affine transformation
-            # degrees=15, translate=(0.1, 0.1), scale=(0.9, 1.1), shear=10
-            angle = torch.FloatTensor(1).uniform_(-15, 15).item()
-            translate_x = torch.FloatTensor(1).uniform_(-0.1, 0.1).item() * 28  # 10% of image width
-            translate_y = torch.FloatTensor(1).uniform_(-0.1, 0.1).item() * 28  # 10% of image height
-            scale = torch.FloatTensor(1).uniform_(0.9, 1.1).item()
-            shear = torch.FloatTensor(1).uniform_(-10, 10).item()
+        if torch.rand(1).item() > CONFIG.aug_prob:
+            angle = torch.FloatTensor(1).uniform_(-CONFIG.angle_range, CONFIG.angle_range).item()
+            translate_x = torch.FloatTensor(1).uniform_(-CONFIG.translate_range, CONFIG.translate_range).item() * CONFIG.image_size  # 10% of image width
+            translate_y = torch.FloatTensor(1).uniform_(-CONFIG.translate_range, CONFIG.translate_range).item() * CONFIG.image_size  # 10% of image height
+            scale = torch.FloatTensor(1).uniform_(CONFIG.scale_range[0], CONFIG.scale_range[1]).item()
+            shear = torch.FloatTensor(1).uniform_(-CONFIG.shear_range, CONFIG.shear_range).item()
             
-            # Apply affine transformation
             image_tensor = torchvision.transforms.functional.affine(
                 image_tensor,
                 angle=angle,
@@ -127,10 +124,5 @@ def data_augmentation(image_tensor, partition):
                 interpolation=torchvision.transforms.InterpolationMode.BILINEAR
             )
     
-    # Normalize (for both train and test)
-    image_tensor = (image_tensor - MNIST_MEAN) / MNIST_STD
-    
-    # Clamp values to reasonable range after normalization
-    image_tensor = torch.clamp(image_tensor, -3.0, 3.0)
-    
+
     return image_tensor
