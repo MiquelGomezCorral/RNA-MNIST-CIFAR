@@ -11,8 +11,7 @@ class CifarNet(nn.Module):
 
         self.global_pool = nn.AdaptiveAvgPool2d(1)
         self.ff1 = nn.Linear(channel_sizes[-1], channel_sizes[-1])
-        self.ff2 = nn.Linear(channel_sizes[-1], 128)
-        self.ff3 = nn.Linear(128, num_classes)
+        self.ff2 = nn.Linear(channel_sizes[-1], num_classes)
         self.relu = nn.ReLU()
         self.dropout = nn.Dropout(dropout_rate)
 
@@ -23,8 +22,7 @@ class CifarNet(nn.Module):
         x = self.global_pool(x)
         x = torch.flatten(x, start_dim=1)
         x = self.dropout(self.relu(self.ff1(x)))
-        x = self.dropout(self.relu(self.ff2(x)))
-        x = self.ff3(x)
+        x = self.ff2(x)
 
         return x
 

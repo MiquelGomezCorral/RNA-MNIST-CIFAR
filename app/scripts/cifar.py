@@ -23,7 +23,7 @@ def train_cifar(CONFIG: Configuration):
     # scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=CONFIG.epochs)
     scheduler = torch.optim.lr_scheduler.OneCycleLR(
         optimizer, 
-        max_lr=CONFIG.lr,
+        max_lr=CONFIG.lr*5,
         epochs=CONFIG.epochs,
         steps_per_epoch=len(train_loader)
     )

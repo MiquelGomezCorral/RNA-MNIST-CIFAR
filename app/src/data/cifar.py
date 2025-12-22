@@ -59,6 +59,7 @@ def load_cifar(CONFIG: Configuration):
         # transforms.RandomAffine(degrees=15, translate=(0.1, 0.1), scale=(0.9, 1.1), shear=10),
         torchvision.transforms.RandAugment(),
         transforms.ToTensor(),
+        transforms.Lambda(lambda x: x + torch.randn_like(x) * 0.1), # RUido
     ])
     train_dataset = CIFAR10_dataset(partition="train", transform=train_da, CONFIG=CONFIG)
     test_dataset = CIFAR10_dataset(partition="test", CONFIG=CONFIG)

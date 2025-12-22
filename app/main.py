@@ -58,7 +58,7 @@ if __name__ == "__main__":
         "-b", "--batch_size", type=int, default=1024, help="Batch size (default: 1024)", 
     ) 
     p_cifar.add_argument(
-        "-lr", "--lr", type=float, default=0.002, help="Learning rate (default: 0.002)",
+        "-lr", "--lr", type=float, default=0.001, help="Learning rate (default: 0.001)",
     )
     p_cifar.add_argument(
         "-wd", "--weight_decay", type=float, default=1e-6, help="Weight decay (default: 1e-6)",
@@ -68,6 +68,9 @@ if __name__ == "__main__":
     )
     p_cifar.add_argument(
         "-des", "--description", type=str, default="CIFAR classification with CNN using Pytorch", help="Description of the experiment"
+    )
+    p_cifar.add_argument(
+        "-dr", "--dropout_rate", type=float, default=0.5, help="Dropout rate (default: 0.5)",
     )
     p_cifar.set_defaults(func=cmd_cifar)
 
