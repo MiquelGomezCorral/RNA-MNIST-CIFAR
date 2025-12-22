@@ -58,7 +58,7 @@ if __name__ == "__main__":
         "-b", "--batch_size", type=int, default=1024, help="Batch size (default: 1024)", 
     ) 
     p_cifar.add_argument(
-        "-lr", "--lr", type=float, default=0.0025, help="Learning rate (default: 0.0025)",
+        "-lr", "--lr", type=float, default=0.002, help="Learning rate (default: 0.002)",
     )
     p_cifar.add_argument(
         "-wd", "--weight_decay", type=float, default=1e-6, help="Weight decay (default: 1e-6)",
