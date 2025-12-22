@@ -3,17 +3,17 @@ import torch.nn as nn
 import torch.optim as optim
 
 from src.config import Configuration
-from src.data import load_mnist
-from src.models import MnistNet 
+from src.data import load_cifar
+from src.models import CifarNet 
 from src.utils import count_parameters, get_device
 from src.models import train_model
 
-def train_mnist(CONFIG: Configuration):
+def train_cifar(CONFIG: Configuration):
     # ===================== DATA =====================
-    train_loader, test_loader = load_mnist(CONFIG)
+    train_loader, test_loader = load_cifar(CONFIG)
 
     # ===================== MODEL ====================
-    model = MnistNet(CONFIG.num_classes)
+    model = CifarNet(CONFIG.num_classes)
     count_parameters(model)
 
     CONFIG.device = get_device()

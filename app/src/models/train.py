@@ -96,9 +96,7 @@ def train_model(
         test_loss /= len(test_dataloader.dataset)
         test_accuracy = 100. * test_correct / len(test_dataloader.dataset)
 
-        print("[Epoch {}] Train Loss: {:.6f} - Test Loss: {:.6f} - Train Accuracy: {:.2f}% - Test Accuracy: {:.2f}%".format(
-            epoch + 1, train_loss, test_loss, 100. * train_correct / len(train_dataloader.dataset), test_accuracy
-        ))
+        print(f"[Epoch {epoch + 1}] Train Loss: {train_loss:.6f} - Test Loss: {test_loss:.6f} - Train Accuracy: {train_correct / len(train_dataloader.dataset):.2%} - Test Accuracy: {test_accuracy:.2f}%")
 
         if test_accuracy > best_accuracy:
             best_accuracy = test_accuracy
@@ -108,7 +106,7 @@ def train_model(
             torch.save(model.state_dict(), CONFIG.best_model_path)
     
     # NOTE: end for
-    print("\nBEST TEST ACCURACY: ", best_accuracy, " in epoch ", best_epoch)
+    print(f"\nBEST TEST ACCURACY: {best_accuracy:.2f}% in epoch {best_epoch}")
 
     # ================================================================================= 
     #                                    Final Evaluation
@@ -136,7 +134,7 @@ def train_model(
 
         test_loss /= len(test_dataloader.dataset)
         test_accuracy = 100. * test_correct / len(test_dataloader.dataset)
-    print("Final best acc: ", test_accuracy)
+    print(f"Final best acc: {test_accuracy:.2f}%")
 
     save_config_score(
         CONFIG=CONFIG,

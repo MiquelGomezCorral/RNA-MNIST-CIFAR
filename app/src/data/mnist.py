@@ -9,14 +9,14 @@ from maikol_utils.print_utils import print_separator
 from src.config import Configuration
 
 
-
 class MNIST_dataset(Dataset):
     def __init__(self, data, partition = "train", CONFIG: Configuration = None):
-        print("\nLoading MNIST ", partition, " Dataset...")
+        print_separator(f"Loading MNIST {partition} Dataset...")
         self.data = data
         self.partition = partition
         self.CONFIG = CONFIG
-        print("\tTotal Len.: ", len(self.data), "\n", 50*"-")
+        print(f"Total data {len(self.data)}")
+        print_separator(" ")
 
     def __len__(self):
         return len(self.data)
@@ -35,12 +35,12 @@ class MNIST_dataset(Dataset):
         # provide 1x28x28 (channels, height, width) -> 784
         image_tensor = image_tensor.view(-1)
 
-
         # Label
         label = torch.tensor(self.data[idx][1])
         label = F.one_hot(label, num_classes=10).float()
 
-        return {"img": image_tensor, "label": label}
+        return {"idx": idx, "img": image_tensor, "label": label}
+        # return {"img": image_tensor, "label": label}
 
         
     def data_augmentation(self, image_tensor, partition):

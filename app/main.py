@@ -5,7 +5,7 @@ import dotenv
 from maikol_utils.other_utils import args_to_dataclass
 from src.config import Configuration
 
-from scripts import train_mnist
+from scripts import train_mnist, train_cifar
 
 def cmd_mnist(args: argparse.Namespace):
     """Call read_extract_from_config_list with the given args."""
@@ -15,6 +15,7 @@ def cmd_mnist(args: argparse.Namespace):
 def cmd_cifar(args: argparse.Namespace):
     """Call read_extract_from_config_list with the given args."""
     CONFIG: Configuration = args_to_dataclass(args, Configuration)
+    train_cifar(CONFIG)
 
 
 # ======================================================================================
@@ -54,7 +55,19 @@ if __name__ == "__main__":
     # ======================================================================================
     p_cifar = subparsers.add_parser("cifar", help="Read and extract from config list")
     p_cifar.add_argument(
-        "-c", "--code", type=int, default=1, help="Wich script shall be runned.", choices=[1, 2, 3]
+        "-b", "--batch_size", type=int, default=1024, help="Batch size (default: 1024)", 
+    ) 
+    p_cifar.add_argument(
+        "-lr", "--lr", type=float, default=0.002, help="Learning rate (default: 0.002)",
+    )
+    p_cifar.add_argument(
+        "-wd", "--weight_decay", type=float, default=1e-6, help="Weight decay (default: 1e-6)",
+    )
+    p_cifar.add_argument(
+        "-e", "--epochs", type=int, default=200, help="Number of epochs (default: 200)",
+    )
+    p_cifar.add_argument(
+        "-des", "--description", type=str, default="CIFAR classification with CNN using Pytorch", help="Description of the experiment"
     )
     p_cifar.set_defaults(func=cmd_cifar)
 
