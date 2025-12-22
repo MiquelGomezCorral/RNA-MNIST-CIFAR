@@ -23,6 +23,6 @@ def save_config_score(CONFIG: Configuration, score: float, model: MnistNet) -> N
             value = getattr(CONFIG, field.name)
             f.write(f"{field.name}: {value}\n")
         
-        model_summary = summary(model, input_size=(32, 784))
+        model_summary = summary(model)
         print(model_summary, file=f)  
         

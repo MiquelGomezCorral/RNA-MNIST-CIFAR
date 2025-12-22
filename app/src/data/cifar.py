@@ -55,7 +55,9 @@ def load_cifar(CONFIG: Configuration):
     # Load dataset CIFAR10_dataset class
     train_da = transforms.Compose([
         transforms.RandomHorizontalFlip(),
-        transforms.RandomAffine(degrees=15, translate=(0.1, 0.1), scale=(0.9, 1.1), shear=10),
+        transforms.RandomCrop(32, padding=4),
+        # transforms.RandomAffine(degrees=15, translate=(0.1, 0.1), scale=(0.9, 1.1), shear=10),
+        torchvision.transforms.RandAugment(),
         transforms.ToTensor(),
     ])
     train_dataset = CIFAR10_dataset(partition="train", transform=train_da, CONFIG=CONFIG)

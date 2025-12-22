@@ -13,7 +13,7 @@ def train_cifar(CONFIG: Configuration):
     train_loader, test_loader = load_cifar(CONFIG)
 
     # ===================== MODEL ====================
-    model = CifarNet(CONFIG.num_classes)
+    model = CifarNet(CONFIG.num_classes, dropout_rate=CONFIG.dropout_rate)
     count_parameters(model)
 
     CONFIG.device = get_device()

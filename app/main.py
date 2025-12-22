@@ -58,13 +58,13 @@ if __name__ == "__main__":
         "-b", "--batch_size", type=int, default=1024, help="Batch size (default: 1024)", 
     ) 
     p_cifar.add_argument(
-        "-lr", "--lr", type=float, default=0.002, help="Learning rate (default: 0.002)",
+        "-lr", "--lr", type=float, default=0.0025, help="Learning rate (default: 0.0025)",
     )
     p_cifar.add_argument(
         "-wd", "--weight_decay", type=float, default=1e-6, help="Weight decay (default: 1e-6)",
     )
     p_cifar.add_argument(
-        "-e", "--epochs", type=int, default=200, help="Number of epochs (default: 200)",
+        "-e", "--epochs", type=int, default=100, help="Number of epochs (default: 100)",
     )
     p_cifar.add_argument(
         "-des", "--description", type=str, default="CIFAR classification with CNN using Pytorch", help="Description of the experiment"
