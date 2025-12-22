@@ -55,13 +55,13 @@ if __name__ == "__main__":
     # ======================================================================================
     p_cifar = subparsers.add_parser("cifar", help="Read and extract from config list")
     p_cifar.add_argument(
-        "-b", "--batch_size", type=int, default=1024, help="Batch size (default: 1024)", 
+        "-b", "--batch_size", type=int, default=256, help="Batch size (default: 256)", 
     ) 
     p_cifar.add_argument(
         "-lr", "--lr", type=float, default=0.001, help="Learning rate (default: 0.001)",
     )
     p_cifar.add_argument(
-        "-wd", "--weight_decay", type=float, default=1e-6, help="Weight decay (default: 1e-6)",
+        "-wd", "--weight_decay", type=float, default=2e-6, help="Weight decay (default: 2e-6)",
     )
     p_cifar.add_argument(
         "-e", "--epochs", type=int, default=100, help="Number of epochs (default: 100)",

@@ -52,17 +52,30 @@ class CIFAR10_dataset(Dataset):
 
 def load_cifar(CONFIG: Configuration):
     print_separator(f"Loading CIFAR10 Dataset...")
-    # Load dataset CIFAR10_dataset class
+    # CIFAR-10 statistics
+    cifar_mean = [0.4914, 0.4822, 0.4465]
+    cifar_std = [0.2470, 0.2435, 0.2616]
+    
+    # Enhanced data augmentation for training
     train_da = transforms.Compose([
-        transforms.RandomHorizontalFlip(),
         transforms.RandomCrop(32, padding=4),
-        # transforms.RandomAffine(degrees=15, translate=(0.1, 0.1), scale=(0.9, 1.1), shear=10),
-        torchvision.transforms.RandAugment(),
+        transforms.RandomHorizontalFlip(),
+        # transforms.RandomRotation(15),
+        # transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
+        torchvision.transforms.RandAugment(num_ops=2, magnitude=9),
         transforms.ToTensor(),
-        transforms.Lambda(lambda x: x + torch.randn_like(x) * 0.1), # RUido
+        transforms.Normalize(mean=cifar_mean, std=cifar_std),
+        # transforms.RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3)),
     ])
+    
+    # Test transform with normalization only
+    test_transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize(mean=cifar_mean, std=cifar_std),
+    ])
+    
     train_dataset = CIFAR10_dataset(partition="train", transform=train_da, CONFIG=CONFIG)
-    test_dataset = CIFAR10_dataset(partition="test", CONFIG=CONFIG)
+    test_dataset = CIFAR10_dataset(partition="test", transform=test_transform, CONFIG=CONFIG)
 
     # DataLoader Class
     train_dataloader = DataLoader(train_dataset, CONFIG.batch_size, shuffle=True, num_workers=CONFIG.num_workers)

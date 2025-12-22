@@ -24,12 +24,12 @@ class Configuration:
     device: str = "cuda"  # "cpu" or "cuda"
     num_workers: int = multiprocessing.cpu_count()-4
     num_classes: int = 10
-    batch_size: int = 1024
-    epochs: int = 200
-    lr: float = 0.002
-    weight_decay: float = 1e-6
+    batch_size: int = 128
+    epochs: int = 300
+    lr: float = 0.1
+    weight_decay: float = 5e-4
     momentum: float = 0.9
-    dropout_rate: float = 0.5
+    dropout_rate: float = 0.3
 
     # =============== Data aug parameters =============== 
     image_size: int = 28
