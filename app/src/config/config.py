@@ -30,6 +30,7 @@ class Configuration:
     weight_decay: float = 5e-4
     momentum: float = 0.9
     dropout_rate: float = 0.3
+    label_smoothing: float = 0.15
 
     # =============== Data aug parameters =============== 
     image_size: int = 28

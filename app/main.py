@@ -55,7 +55,7 @@ if __name__ == "__main__":
     # ======================================================================================
     p_cifar = subparsers.add_parser("cifar", help="Read and extract from config list")
     p_cifar.add_argument(
-        "-b", "--batch_size", type=int, default=256, help="Batch size (default: 256)", 
+        "-b", "--batch_size", type=int, default=256, help="Batch size (default: 1024)", 
     ) 
     p_cifar.add_argument(
         "-lr", "--lr", type=float, default=0.001, help="Learning rate (default: 0.001)",
@@ -71,6 +71,9 @@ if __name__ == "__main__":
     )
     p_cifar.add_argument(
         "-dr", "--dropout_rate", type=float, default=0.5, help="Dropout rate (default: 0.5)",
+    )
+    p_cifar.add_argument(
+        "-ls", "--label_smoothing", type=float, default=0.1, help="Label smoothing (default: 0.1)",
     )
     p_cifar.set_defaults(func=cmd_cifar)
 
