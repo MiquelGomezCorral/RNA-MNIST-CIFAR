@@ -55,18 +55,30 @@ def load_cifar(CONFIG: Configuration):
     # CIFAR-10 statistics
     cifar_mean = [0.4914, 0.4822, 0.4465]
     cifar_std = [0.2470, 0.2435, 0.2616]
+
     
-    # Enhanced data augmentation for training
     train_da = transforms.Compose([
-        transforms.RandomCrop(32, padding=4),
-        transforms.RandomHorizontalFlip(),
-        # transforms.RandomRotation(15),
-        # transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
-        torchvision.transforms.RandAugment(num_ops=2, magnitude=9),
+        transforms.RandomApply([
+            transforms.RandomCrop(32, padding=4),
+        ], p=CONFIG.aug_prob),
+        transforms.RandomApply([
+            transforms.RandomHorizontalFlip(p=1.0),
+        ], p=CONFIG.aug_prob),
+        transforms.RandomApply([
+            torchvision.transforms.RandAugment(num_ops=2, magnitude=9),
+        ], p=CONFIG.aug_prob),
         transforms.ToTensor(),
         transforms.Normalize(mean=cifar_mean, std=cifar_std),
-        # transforms.RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3)),
     ])
+
+    # # Enhanced data augmentation for training
+    # train_da = transforms.Compose([
+    #     transforms.RandomCrop(32, padding=4),
+    #     transforms.RandomHorizontalFlip(),
+    #     torchvision.transforms.RandAugment(num_ops=2, magnitude=9),
+    #     transforms.ToTensor(),
+    #     transforms.Normalize(mean=cifar_mean, std=cifar_std),
+    # ])
     
     # Test transform with normalization only
     test_transform = transforms.Compose([

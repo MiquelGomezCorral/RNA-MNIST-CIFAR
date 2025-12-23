@@ -18,16 +18,9 @@ def train_cifar(CONFIG: Configuration):
 
     CONFIG.device = get_device()
     criterion = nn.CrossEntropyLoss(label_smoothing=CONFIG.label_smoothing)
-    # optimizer = optim.SGD(model.parameters(), lr=CONFIG.lr, weight_decay=CONFIG.weight_decay, momentum=CONFIG.momentum)
     # optimizer = optim.SGD(model.parameters(), lr=CONFIG.lr, weight_decay=CONFIG.weight_decay, momentum=CONFIG.momentum, nesterov=True)
     optimizer = optim.AdamW(model.parameters(), lr=CONFIG.lr, weight_decay=CONFIG.weight_decay)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=CONFIG.epochs)
-    # scheduler = torch.optim.lr_scheduler.OneCycleLR(
-    #     optimizer, 
-    #     max_lr=CONFIG.lr,
-    #     epochs=CONFIG.epochs,
-    #     steps_per_epoch=len(train_loader)
-    # )
     # Cosine Annealing with warm restarts
     # scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=CONFIG.epochs//3, T_mult=1, eta_min=1e-6)
 
