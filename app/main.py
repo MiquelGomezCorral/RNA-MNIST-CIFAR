@@ -64,7 +64,7 @@ if __name__ == "__main__":
         "-wd", "--weight_decay", type=float, default=2e-6, help="Weight decay (default: 2e-6)",
     )
     p_cifar.add_argument(
-        "-e", "--epochs", type=int, default=200, help="Number of epochs (default: 100)",
+        "-e", "--epochs", type=int, default=150, help="Number of epochs (default: 150)",
     )
     p_cifar.add_argument(
         "-des", "--description", type=str, default="CIFAR classification with CNN using Pytorch", help="Description of the experiment"
