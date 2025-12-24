@@ -3,7 +3,7 @@ import torch
 
 class CifarNet(nn.Module):
     # def __init__(self, num_classes=10, channel_sizes=[3, 32, 64, 128, 256, 512], dropout_rate=0.5):
-    def __init__(self, num_classes=10, channel_sizes=[3, 64, 128, 256], dropout_rate=0.5):
+    def __init__(self, num_classes=10, channel_sizes=[3, 32, 64, 128, 256, 512], dropout_rate=0.5):
         super(CifarNet, self).__init__()
         self.conv_layers = nn.Sequential(*[
             ResNetBlock(channel_sizes[i], channel_sizes[i+1]) for i, _ in enumerate(channel_sizes[:-1])
