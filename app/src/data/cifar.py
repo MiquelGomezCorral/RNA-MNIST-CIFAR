@@ -52,10 +52,6 @@ class CIFAR10_dataset(Dataset):
 
 def load_cifar(CONFIG: Configuration):
     print_separator(f"Loading CIFAR10 Dataset...")
-    # CIFAR-10 statistics
-    cifar_mean = [0.4914, 0.4822, 0.4465]
-    cifar_std = [0.2470, 0.2435, 0.2616]
-
     
     train_da = transforms.Compose([
         transforms.RandomApply([
@@ -68,7 +64,6 @@ def load_cifar(CONFIG: Configuration):
             torchvision.transforms.RandAugment(num_ops=2, magnitude=9),
         ], p=CONFIG.aug_prob),
         transforms.ToTensor(),
-        transforms.Normalize(mean=cifar_mean, std=cifar_std),
     ])
 
     # # Enhanced data augmentation for training
@@ -83,7 +78,6 @@ def load_cifar(CONFIG: Configuration):
     # Test transform with normalization only
     test_transform = transforms.Compose([
         transforms.ToTensor(),
-        transforms.Normalize(mean=cifar_mean, std=cifar_std),
     ])
     
     train_dataset = CIFAR10_dataset(partition="train", transform=train_da, CONFIG=CONFIG)
