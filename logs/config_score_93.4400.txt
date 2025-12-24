@@ -1,0 +1,74 @@
+Description: No normalize 150 ep
+DATA_FOLDER: ../data/
+MODEL_FOLDER: ../models/
+LOGS_FOLDER: ../logs/
+best_model_path: ../models/best_model-964533.pth
+description: No normalize 150 ep
+seed: 42
+device: cuda
+num_workers: 20
+num_classes: 10
+batch_size: 256
+epochs: 150
+lr: 0.001
+weight_decay: 2e-06
+momentum: 0.9
+dropout_rate: 0.4
+label_smoothing: 0.1
+aug_prob: 0.8
+image_size: 28
+angle_range: 15
+translate_range: 0.1
+scale_range: (0.9, 1.1)
+shear_range: 10
+=================================================================
+Layer (type:depth-idx)                   Param #
+=================================================================
+CifarNet                                 --
+├─Sequential: 1-1                        --
+│    └─ResNetBlock: 2-1                  --
+│    │    └─Conv2d: 3-1                  896
+│    │    └─BatchNorm2d: 3-2             64
+│    │    └─Conv2d: 3-3                  9,248
+│    │    └─BatchNorm2d: 3-4             64
+│    │    └─Conv2d: 3-5                  128
+│    │    └─ReLU: 3-6                    --
+│    └─ResNetBlock: 2-2                  --
+│    │    └─Conv2d: 3-7                  18,496
+│    │    └─BatchNorm2d: 3-8             128
+│    │    └─Conv2d: 3-9                  36,928
+│    │    └─BatchNorm2d: 3-10            128
+│    │    └─Conv2d: 3-11                 2,112
+│    │    └─ReLU: 3-12                   --
+│    └─ResNetBlock: 2-3                  --
+│    │    └─Conv2d: 3-13                 73,856
+│    │    └─BatchNorm2d: 3-14            256
+│    │    └─Conv2d: 3-15                 147,584
+│    │    └─BatchNorm2d: 3-16            256
+│    │    └─Conv2d: 3-17                 8,320
+│    │    └─ReLU: 3-18                   --
+│    └─ResNetBlock: 2-4                  --
+│    │    └─Conv2d: 3-19                 295,168
+│    │    └─BatchNorm2d: 3-20            512
+│    │    └─Conv2d: 3-21                 590,080
+│    │    └─BatchNorm2d: 3-22            512
+│    │    └─Conv2d: 3-23                 33,024
+│    │    └─ReLU: 3-24                   --
+│    └─ResNetBlock: 2-5                  --
+│    │    └─Conv2d: 3-25                 1,180,160
+│    │    └─BatchNorm2d: 3-26            1,024
+│    │    └─Conv2d: 3-27                 2,359,808
+│    │    └─BatchNorm2d: 3-28            1,024
+│    │    └─Conv2d: 3-29                 131,584
+│    │    └─ReLU: 3-30                   --
+├─AdaptiveAvgPool2d: 1-2                 --
+├─Linear: 1-3                            262,656
+├─BatchNorm1d: 1-4                       1,024
+├─Linear: 1-5                            5,130
+├─ReLU: 1-6                              --
+├─Dropout: 1-7                           --
+=================================================================
+Total params: 5,160,170
+Trainable params: 5,160,170
+Non-trainable params: 0
+=================================================================

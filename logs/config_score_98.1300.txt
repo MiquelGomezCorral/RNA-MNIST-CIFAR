@@ -1,0 +1,34 @@
+DATA_FOLDER: ../data/
+MODEL_FOLDER: ../models/
+LOGS_FOLDER: ../logs/
+best_model_path: ../models/best_model.pth
+seed: 42
+device: cuda
+num_workers: 20
+num_classes: 10
+batch_size: 1024
+epochs: 5
+lr: 0.001
+weight_decay: 1e-06
+==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+MnistNet                                 [32, 10]                  --
+├─Linear: 1-1                            [32, 1024]                803,840
+├─ReLU: 1-2                              [32, 1024]                --
+├─Linear: 1-3                            [32, 1024]                1,049,600
+├─ReLU: 1-4                              [32, 1024]                --
+├─Linear: 1-5                            [32, 1024]                1,049,600
+├─ReLU: 1-6                              [32, 1024]                --
+├─Linear: 1-7                            [32, 10]                  10,250
+==========================================================================================
+Total params: 2,913,290
+Trainable params: 2,913,290
+Non-trainable params: 0
+Total mult-adds (Units.MEGABYTES): 93.23
+==========================================================================================
+Input size (MB): 0.10
+Forward/backward pass size (MB): 0.79
+Params size (MB): 11.65
+Estimated Total Size (MB): 12.54
+==========================================================================================

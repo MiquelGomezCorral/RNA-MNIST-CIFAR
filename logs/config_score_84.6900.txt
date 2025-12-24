@@ -1,0 +1,21 @@
+Description: CIFAR classification with CNN using Pytorch
+DATA_FOLDER: ../data/
+MODEL_FOLDER: ../models/
+LOGS_FOLDER: ../logs/
+best_model_path: ../models/best_model-113475.pth
+description: CIFAR classification with CNN using Pytorch
+seed: 42
+device: cuda
+num_workers: 20
+num_classes: 10
+batch_size: 1024
+epochs: 200
+lr: 0.002
+weight_decay: 1e-06
+momentum: 0.9
+image_size: 28
+aug_prob: 0.5
+angle_range: 15
+translate_range: 0.1
+scale_range: (0.9, 1.1)
+shear_range: 10

@@ -208,7 +208,7 @@ __marimo__/
 
 data/*
 !data/.gitkeep
-logs/*
+# logs/*
 !logs/.gitkeep
 models/*
 !models/.gitkeep

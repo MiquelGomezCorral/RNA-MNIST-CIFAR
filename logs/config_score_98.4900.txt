@@ -1,0 +1,43 @@
+Description: no bright
+DATA_FOLDER: ../data/
+MODEL_FOLDER: ../models/
+LOGS_FOLDER: ../logs/
+best_model_path: ../models/best_model.pth
+description: no bright
+seed: 42
+device: cuda
+num_workers: 20
+num_classes: 10
+batch_size: 1024
+epochs: 150
+lr: 5e-05
+weight_decay: 1e-06
+==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+MnistNet                                 [32, 10]                  --
+├─ModuleList: 1-1                        --                        --
+│    └─CustomLayer: 2-1                  [32, 1024]                --
+│    │    └─ModuleList: 3-1              --                        805,888
+│    └─CustomLayer: 2-2                  [32, 1024]                --
+│    │    └─ModuleList: 3-2              --                        1,051,648
+│    └─SkipConnection: 2-3               [32, 512]                 --
+│    │    └─Linear: 3-3                  [32, 512]                 524,800
+│    │    └─BatchNorm1d: 3-4             [32, 512]                 1,024
+│    │    └─ReLU: 3-5                    [32, 512]                 --
+│    │    └─Dropout: 3-6                 [32, 512]                 --
+│    │    └─Linear: 3-7                  [32, 512]                 401,920
+│    │    └─BatchNorm1d: 3-8             [32, 512]                 1,024
+│    │    └─ReLU: 3-9                    [32, 512]                 --
+├─Linear: 1-2                            [32, 10]                  5,130
+==========================================================================================
+Total params: 2,791,434
+Trainable params: 2,791,434
+Non-trainable params: 0
+Total mult-adds (Units.MEGABYTES): 89.33
+==========================================================================================
+Input size (MB): 0.10
+Forward/backward pass size (MB): 1.58
+Params size (MB): 11.17
+Estimated Total Size (MB): 12.84
+==========================================================================================

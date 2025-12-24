@@ -1,0 +1,60 @@
+Description: MNIST classification with MLP using Pytorch
+DATA_FOLDER: ../data/
+MODEL_FOLDER: ../models/
+LOGS_FOLDER: ../logs/
+best_model_path: ../models/best_model-81035.pth
+description: MNIST classification with MLP using Pytorch
+seed: 42
+device: cuda
+num_workers: 20
+num_classes: 10
+batch_size: 1024
+epochs: 15
+lr: 0.002
+weight_decay: 1e-06
+momentum: 0.9
+image_size: 28
+aug_prob: 0.5
+angle_range: 15
+translate_range: 0.1
+scale_range: (0.9, 1.1)
+shear_range: 10
+==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+MnistNet                                 [32, 10]                  --
+├─ModuleList: 1-1                        --                        --
+│    └─CustomLayer: 2-1                  [32, 1536]                --
+│    │    └─ModuleList: 3-1              --                        1,207,328
+│    └─SkipConnectionLayer: 2-2          [32, 1536]                --
+│    │    └─BatchNorm1d: 3-2             [32, 1536]                3,072
+│    │    └─Linear: 3-3                  [32, 1536]                2,360,832
+│    │    └─ReLU: 3-4                    [32, 1536]                --
+│    │    └─Dropout: 3-5                 [32, 1536]                --
+│    │    └─BatchNorm1d: 3-6             [32, 784]                 1,568
+│    │    └─Linear: 3-7                  [32, 1536]                1,205,760
+│    │    └─ReLU: 3-8                    [32, 1536]                --
+│    └─CustomLayer: 2-3                  [32, 1536]                --
+│    │    └─ModuleList: 3-9              --                        2,363,904
+│    └─CustomLayer: 2-4                  [32, 512]                 --
+│    │    └─ModuleList: 3-10             --                        790,016
+│    └─SkipConnectionLayer: 2-5          [32, 256]                 --
+│    │    └─BatchNorm1d: 3-11            [32, 512]                 1,024
+│    │    └─Linear: 3-12                 [32, 256]                 131,328
+│    │    └─ReLU: 3-13                   [32, 256]                 --
+│    │    └─Dropout: 3-14                [32, 256]                 --
+│    │    └─BatchNorm1d: 3-15            [32, 784]                 1,568
+│    │    └─Linear: 3-16                 [32, 256]                 200,960
+│    │    └─ReLU: 3-17                   [32, 256]                 --
+├─Linear: 1-2                            [32, 10]                  2,570
+==========================================================================================
+Total params: 8,269,930
+Trainable params: 8,269,930
+Non-trainable params: 0
+Total mult-adds (Units.MEGABYTES): 264.64
+==========================================================================================
+Input size (MB): 0.10
+Forward/backward pass size (MB): 3.75
+Params size (MB): 33.08
+Estimated Total Size (MB): 36.93
+==========================================================================================

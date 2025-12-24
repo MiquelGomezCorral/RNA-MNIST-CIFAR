@@ -1,0 +1,47 @@
+Description: thicker nn 2
+DATA_FOLDER: ../data/
+MODEL_FOLDER: ../models/
+LOGS_FOLDER: ../logs/
+best_model_path: ../models/best_model.pth
+description: thicker nn 2
+seed: 42
+device: cuda
+num_workers: 20
+num_classes: 10
+batch_size: 1024
+epochs: 150
+lr: 5e-05
+weight_decay: 1e-06
+==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+MnistNet                                 [32, 10]                  --
+├─ModuleList: 1-1                        --                        --
+│    └─CustomLayer: 2-1                  [32, 1024]                --
+│    │    └─ModuleList: 3-1              --                        805,888
+│    └─CustomLayer: 2-2                  [32, 1024]                --
+│    │    └─ModuleList: 3-2              --                        1,051,648
+│    └─SkipConnection: 2-3               [32, 1024]                --
+│    │    └─Linear: 3-3                  [32, 1024]                1,049,600
+│    │    └─BatchNorm1d: 3-4             [32, 1024]                2,048
+│    │    └─ReLU: 3-5                    [32, 1024]                --
+│    │    └─Dropout: 3-6                 [32, 1024]                --
+│    │    └─Linear: 3-7                  [32, 1024]                803,840
+│    │    └─BatchNorm1d: 3-8             [32, 1024]                2,048
+│    │    └─ReLU: 3-9                    [32, 1024]                --
+│    └─CustomLayer: 2-4                  [32, 512]                 --
+│    │    └─ModuleList: 3-10             --                        525,824
+│    └─CustomLayer: 2-5                  [32, 256]                 --
+│    │    └─ModuleList: 3-11             --                        131,840
+├─Linear: 1-2                            [32, 10]                  2,570
+==========================================================================================
+Total params: 4,375,306
+Trainable params: 4,375,306
+Non-trainable params: 0
+Total mult-adds (Units.MEGABYTES): 140.01
+==========================================================================================
+Input size (MB): 0.10
+Forward/backward pass size (MB): 2.49
+Params size (MB): 17.50
+Estimated Total Size (MB): 20.09
+==========================================================================================
